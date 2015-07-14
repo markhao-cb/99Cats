@@ -1,6 +1,7 @@
 <% if flash[:errors] %>
   <%= flash[:errors] %>
 <% end %>
+
 <% if @cat.persisted? %>
   <form action="<%= cat_url(@cat) %>" method="post">
   <input type="hidden" name="_method" value="patch">
@@ -22,7 +23,7 @@
   <br><br>
 
   Birth date:
-  <%= date_field(:cat,:birth_date,min:"2008-07-01")%>
+  <%= date_field(:cat, :birth_date, min:"2008-07-01")%>
   <br><br>
 
   Description:

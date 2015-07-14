@@ -3,10 +3,20 @@ class CatRentalRequest < ActiveRecord::Base
   validates :status, inclusion: { in: ["APPROVED", "DENIED", "PENDING"] }
   validate :not_already_rented
 
+  belongs_to(
+    :cat,
+    class_name: :Cat,
+    foreign_key: :cat_id,
+    primary_key: :id
+  )
+
+  after_initialize { status ||= "PENDING"}
+
   def overlapping_requests
-    CatRentalRequest.where(cat_id: self.cat_id)
-                    .and("? <= end_date", self.start_date)
-                    .and("start_date <= ?", self.end_date)
+    CatRentalRequest.where("id != ?", self.id)
+                    .where(cat_id: self.cat_id)
+                    .where("? <= end_date", self.start_date)
+                    .where("start_date <= ?", self.end_date)
   end
 
   def overlapping_approved_requests

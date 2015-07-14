@@ -1,0 +1,20 @@
+<% if flash[:errors] %>
+  <%= flash[:errors] %>
+<% end %>
+
+<h1>Create cat rental request</h1>
+
+<form action="<%= cat_rental_requests_url %>" method="post">
+  Select cat:
+  <%= collection_select(:crr, :cat_id, Cat.all,
+          :id, :name, {include_blank: true}) %>
+  <br><br>
+
+  Start date:
+  <%= date_field(:crr, :start_date) %>
+  <br><br>
+
+  End date:
+  <%= date_field(:crr, :end_date) %>
+  <input type="submit" value="Confirm">
+</form>
