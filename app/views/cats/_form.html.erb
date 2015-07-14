@@ -1,0 +1,33 @@
+<% if flash[:errors] %>
+  <%= flash[:errors] %>
+<% end %>
+<% if @cat.persisted? %>
+  <form action="<%= cat_url(@cat) %>" method="post">
+  <input type="hidden" name="_method" value="patch">
+<%else%>
+  <form action="<%= cats_url %>" method="post">
+<%end%>
+  Name:
+  <%= text_field(:cat,:name) %>
+  <br><br>
+
+  <%=label(:cat,:sex)%>:
+  Female: <%= radio_button(:cat,:sex,"F")%>
+  Male: <%= radio_button(:cat,:sex,"M")%>
+  <br><br>
+
+  <%= label(:cat,:color)%>:
+  <%= select(:cat, :color, ["brown", "black", "blue", "red"],
+      {include_blank: true}) %>
+  <br><br>
+
+  Birth date:
+  <%= date_field(:cat,:birth_date,min:"2008-07-01")%>
+  <br><br>
+
+  Description:
+  <%=text_area(:cat,:description) %>
+  <br><br>
+
+  <input type="submit" value="Confirm">
+</form>
