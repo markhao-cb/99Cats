@@ -1,6 +1,6 @@
 <h1> <%= @cat.name %> </h1>
 
-<table>
+<table class="cat_sheet">
   <tr>
     <td>Birthday: </td>
     <td> <%= @cat.birth_date %> </td>
@@ -19,5 +19,47 @@
   </tr>
 </table>
 
-<br>
+<% if flash[:overlap] %>
+  <%= flash[:overlap] %>
+<% end %>
+
+<h3>Rental Requests</h3>
+<% unless @cat.rental_requests.empty? %>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Cat name</th>
+        <th>Start date</th>
+        <th>End date</th>
+        <th>Status</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @cat.rental_requests.each do |crr| %>
+        <tr>
+          <td><%=crr.id%></td>
+          <td><%=crr.cat.name%></td>
+          <td><%=crr.start_date%></td>
+          <td><%=crr.end_date%></td>
+          <td><%=crr.status%></td>
+          <% if crr.pending? %>
+            <td><%= button_to('Approve', approve_url(crr), method: "get") %></td>
+            <td><%= button_to('Deny', deny_url(crr), method: "get") %></td>
+          <% else %>
+            <td></td>
+            <td></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  No Requests!
+<% end %>
+<br><br><br>
+
+<a href="<%= new_cat_request_url(@cat) %>">Add a request</a>
 <a href="<%= edit_cat_url %>">Edit</a>

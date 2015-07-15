@@ -7,7 +7,9 @@
 <form action="<%= cat_rental_requests_url %>" method="post">
   Select cat:
   <%= collection_select(:crr, :cat_id, Cat.all,
-          :id, :name, {include_blank: true}) %>
+          :id, :name,
+          include_blank: true,
+          selected: @cat.id) %>
   <br><br>
 
   Start date:

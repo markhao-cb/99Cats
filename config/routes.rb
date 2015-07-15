@@ -54,7 +54,13 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-  resources :cats
+  resources :cats do
+    resources :cat_rental_requests, only: :new, as: :request
+  end
   resources :cat_rental_requests
+
+
+  get '/cat_rental_requests/:id/approve' => 'cat_rental_requests#approve', as: :approve
+  get '/cat_rental_requests/:id/deny' => 'cat_rental_requests#deny', as: :deny
   root 'cats#index'
 end

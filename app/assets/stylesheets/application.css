@@ -15,4 +15,7 @@
  */
 
 * { font-family: 'Chalkboard' }
-body { font-size: 16pt }
+body { font-size: 125% }
+td { font-family: 'Chalkboard'; font-size: inherit }
+.cat_sheet, li { font-size: 150%; line-height: 1.5em }
+td { padding: .5em; }

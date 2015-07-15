@@ -1,0 +1,26 @@
+<h1>Cat Rental Requests</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Cat name</th>
+      <th>Start date</th>
+      <th>End date</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @crrs.each do |crr| %>
+      <tr>
+        <td><%=crr.id%></td>
+        <td><%=crr.cat.name%></td>
+        <td><%=crr.start_date%></td>
+        <td><%=crr.end_date%></td>
+        <td><%=crr.status%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<a href="<%= new_cat_rental_request_url %>">Create a new request</a>

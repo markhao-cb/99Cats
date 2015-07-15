@@ -23,11 +23,32 @@ class CatRentalRequest < ActiveRecord::Base
     overlapping_requests.where(status: "APPROVED")
   end
 
+  def overlapping_pending_requests
+    overlapping_requests.where(status:'PENDING')
+  end
+
+  def approve!
+    transaction do
+      self.status = "APPROVED"
+      save!
+      overlapping_pending_requests.each { |req| req.deny! }
+    end
+  end
+
+  def deny!
+    self.status = "DENIED"
+    save
+  end
+
+  def pending?
+    self.status == "PENDING"
+  end
+
   private
 
   def not_already_rented
     unless overlapping_approved_requests.empty?
-      errors[:cat_id] << "Can't approved because cat is rented"
+      errors[:cat_id] << "overlapping approvals"
     end
   end
 end

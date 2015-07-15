@@ -1,6 +1,10 @@
 class CatRentalRequestsController < ApplicationController
+  def index
+    @crrs = CatRentalRequest.all
+  end
+
   def new
-    @cats = Cat.all
+    @cat = Cat.find(params[:cat_id])
   end
 
   def create
@@ -15,6 +19,22 @@ class CatRentalRequestsController < ApplicationController
 
   def show
     @crr = CatRentalRequest.find(params[:id])
+  end
+
+  def approve
+    @crr = CatRentalRequest.find(params[:id])
+    @crr.approve!
+  rescue
+    flash[:overlap] = "Overlapping approval"
+  ensure
+    redirect_to :back
+  end
+
+  def deny
+    @crr = CatRentalRequest.find(params[:id])
+    @crr.deny!
+
+    redirect_to cat_url(@crr.cat_id)
   end
 
   private
